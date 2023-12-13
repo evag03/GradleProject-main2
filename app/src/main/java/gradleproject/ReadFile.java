@@ -11,11 +11,15 @@ import com.google.common.graph.ValueGraphBuilder;
 
 import gradleproject.GraphDisplay.Pair;
 
+import java.awt.Color;
+import java.awt.Point;
+
 
 /**
  * Initializes the ReadFile class, which contains methods for computating the dataset.
  */
 public class ReadFile {
+
   /**
   * File reader for dataset; takes in a file with a corresponding file name and reads it, placing it into a scanner.
   * @param filename (String) The name of the file being read
@@ -181,6 +185,28 @@ public class ReadFile {
     ArrayList<Object> distanceAndVia = new ArrayList<Object>();
     distanceAndVia.add(distance);
     distanceAndVia.add(via);
+    //end of algorithm.
+    
+    // void printPath(int parent[], int j)
+    // {
+    //     // Base Case : If j is source
+    //     if (parent[j]==-1)
+    //         return;
+    
+    //     printPath(parent, parent[j]);
+    
+    //     printf("%d ", j);
+    // }
+
+    //getting path from source node to target node.
+    Scanner userInput = new Scanner(System.in);
+    System.out.println("Where do you want to go? (Enter target node number): ");
+    
+    //probably check for badinputs here...
+    String target = userInput.nextLine();
+    userInput.close();
+
+    getPath(source, target, distance, via);
     return distanceAndVia;
   }
   
@@ -212,6 +238,8 @@ public class ReadFile {
         }
         
     }
+
+
     /**
      * Prints the number of nodes, number of edges, maximum node degree, average node degree, and other characteristics of the dataset
      * @param listofVerticies (HashSet<String>) The verticies in the dataset being analyzed
@@ -238,8 +266,71 @@ public class ReadFile {
       System.out.println("The average node degree: " + avgDegree);
 
     }
-  
 
+  public static void animation(MutableValueGraph<String,Integer> graph) {
+    GraphDisplay d = new GraphDisplay(graph);
+    d.labelOffset = new Point(0,3);
+
+    String[] labels = {"C", "E", "F", "A", "D", "B"};
+    while (true) {
+      for (String lbl: labels) {
+        try {
+          Thread.sleep(500);
+        } catch (Exception e) {
+        }
+        d.setColor(lbl,Color.BLUE);
+      }
+      System.out.println(d.getEdgeSet().size());
+      int counter = 0;
+      for (Object edge: d.getEdgeSet()) {
+        System.out.println(counter);
+        counter = counter + 1;
+        try {
+          Thread.sleep(500);
+        } catch (Exception e) {
+        }
+        d.setColor(edge,Color.GREEN);
+      }
+      for (String lbl: labels) {
+        try {
+          Thread.sleep(500);
+        } catch (Exception e) {
+        }
+        d.setColor(lbl,Color.RED);
+      }
+      for (Object edge: d.getEdgeSet()) {
+        try {
+          Thread.sleep(500);
+        } catch (Exception e) {
+        }
+        d.setColor(edge,Color.MAGENTA);
+      }
+    }
+    
+  }
+
+  public static void getPath(String source, String target, HashMap<String, Integer> distance, HashMap<String, String> via) {
+    //look for target in via hashmap,
+    //try to get back to source by following the value of the target key in the via hashmap.
+    String path = "Path from " + source + " to " + target + ": ";
+    String pathRoads = " ";
+    for (String key: via.keySet()) {
+      if (key.equals(target)) {
+       pathRoads += via.get(key) + " ";
+       target = via.get(key);
+       key = via.get(key);
+      }
+    }
+    System.out.println(pathRoads);
+    String[] pathRoadsReversal = pathRoads.split(" ");
+    
+    for (String s: pathRoadsReversal) {
+      
+    }
+
+    
+  }
+  
     public static void main(String[] args) {
       //MutableGraph<String> graph = GraphBuilder.directed().build();
       MutableValueGraph<String,Integer> graph = ValueGraphBuilder.undirected().build();
@@ -255,11 +346,11 @@ public class ReadFile {
       // };
       
       // Not sure how to fix this error
-      System.out.println(DijkstraAlgorithm(graph,"0"));
+      DijkstraAlgorithm(graph,"0");
 
       printStatistics(listOfVertices, graph, edgeSets);
       //Animation animatedVersion = new Animation();
-      Animation.animation(graph);
+      //Animation.animation(graph);
 
 
       
