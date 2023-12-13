@@ -1,0 +1,13 @@
+Bibliographic information about the dataset (i.e., source url, authors/owners)
+    SNAP URL: https://snap.stanford.edu/data/roadNet-TX.html
+    Source URL: http://arxiv.org/abs/0810.1355 - Community Structure in Large Networks: Natural Cluster Sizes and the Absence of Large Well-Defined Clusters. Internet Mathematics 6(1) 29--123, 2009.
+    Authors: J. Leskovec, K. Lang, A. Dasgupta, M. Mahoney
+
+Number of nodes and edges
+    Number of nodes: 1,379,917
+    Number of edges: 1,921,660
+
+Qualities of the graph: directed or undirected; self-edges ok? duplicate edges ok? other choices made?
+    - Directed (two-lane roads) & undirected (one-ways)
+    - No self-edges
+    - No duplicate-edges
